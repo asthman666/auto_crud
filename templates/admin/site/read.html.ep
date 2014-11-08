@@ -1,0 +1,25 @@
+% layout 'default';
+
+<table id="events-table" data-url="/admin/site/read.json" data-toggle="table" data-sort-name="site_id" data-sort-order="desc" data-side-pagination="server" data-pagination="true" data-page-list="[10, 50, 100]" data-search="true">
+        <thead>
+            <tr>
+                <th data-field="site_id" data-sortable="true">Site ID</th>
+                <th data-field="active" data-sortable="true">Active</th>
+                <th data-field="dt_created" data-sortable="true">Dt created</th>
+                <th data-field="dt_updated" data-sortable="true">Dt updated</th>
+                <th data-field="site_name" data-sortable="true">Site name</th>
+                <th data-field="domain" data-sortable="true">Domain</th>
+                <th data-field="track_url" data-sortable="true">Track url</th>
+            </tr>
+        </thead>
+</table>
+
+<script>
+  $(function () {
+      $('#events-table').bootstrapTable({
+      }).on('click-row.bs.table', function (e, row, $element) {
+        alert(JSON.stringify(row));
+        //$result.text('Event: click-row.bs.table, data: ' + JSON.stringify(row));
+      })
+  })
+</script>

@@ -1,0 +1,22 @@
+% layout 'default';
+
+<table data-url="/admin/review/read.json" data-toggle="table" data-sort-name="review_id" data-sort-order="desc" data-side-pagination="server" data-pagination="true" data-page-list="[10, 50, 100]" data-search="true">
+        <thead>
+            <tr>
+                <th data-field="review_id" data-sortable="true">Review ID</th>
+                <th data-field="active" data-sortable="true">Active</th>
+                <th data-field="dt_created" data-sortable="true">Dt created</th>
+                <th data-field="dt_updated" data-sortable="true">Dt updated</th>
+                <th data-field="review_title" data-sortable="true">Review title</th>
+                <th data-field="review_author" data-sortable="true">Review author</th>
+                <th data-field="review_date" data-sortable="true">Review date</th>
+                <th data-field="review_rating" data-sortable="true">Review rating</th>
+                <th data-field="review_content">Review content</th>
+                <th data-field="up" data-sortable="true">Up</th>
+                <th data-field="vote_num" data-sortable="true">Vote num</th>
+                <th data-field="review_author_id" data-sortable="true">Review author id</th>
+                <th data-field="site_id" data-sortable="true">Site ID</th>
+                <th data-field="id">ID</th>
+            </tr>
+        </thead>
+</table>
