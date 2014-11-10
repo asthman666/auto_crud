@@ -10,16 +10,23 @@
                 <th data-field="site_name" data-sortable="true">Site name</th>
                 <th data-field="domain" data-sortable="true">Domain</th>
                 <th data-field="track_url" data-sortable="true">Track url</th>
+		<th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Item Operate</th>
             </tr>
         </thead>
 </table>
 
 <script>
-  $(function () {
-      $('#events-table').bootstrapTable({
-      }).on('click-row.bs.table', function (e, row, $element) {
-        alert(JSON.stringify(row));
-        //$result.text('Event: click-row.bs.table, data: ' + JSON.stringify(row));
-      })
-  })
+function operateFormatter(value, row, index) {
+    return [
+        '<a class="remove ml10" href="javascript:void(0)" title="Remove">',
+        '<i class="glyphicon glyphicon-remove"></i>',
+        '</a>'
+    ].join('');
+}
+
+window.operateEvents = {
+    'click .remove': function (e, value, row, index) {
+        $('#myModal').data('id', row.id).modal('show');
+    }
+};
 </script>
