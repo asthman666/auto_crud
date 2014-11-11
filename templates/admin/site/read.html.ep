@@ -79,7 +79,7 @@ $modal_update.on('click', '#modal-form-submit-update', function(){
 var $modal_delete = $('#modal-delete');
 $modal_delete.on('click', '#modal-form-submit-delete', function(){
       $.post("/admin/site/delete.json", $("#modal-form-delete").serialize(), function(data) {
-          modal_show_msg($modal_update, data.code);
+          modal_show_msg($modal_delete, data.code);
       });
 });
 

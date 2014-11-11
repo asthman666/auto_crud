@@ -46,12 +46,12 @@ sub api_create {
     }
     
     push @k, ("dt_created", "dt_updated");
-    push @v, ("now()", "now()");
     
-    my $query = "insert into site (" . join(",", @k) . ") values (" . join(",", ("?")x@v ) . ")";
+    my $query = "insert into site (" . join(",", @k) . ") values (" . join(",", ("?")x@v ) . ", now(), now())";
     $self->mysql->db->query($query, @v);
 
     $info->{code} = 1;
+    $self->render(json => $info);
 }
 
 sub api_update {
