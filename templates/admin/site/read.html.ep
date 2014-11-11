@@ -24,7 +24,7 @@
 <div id="modal-update" class="modal container hide fade" tabindex="-1">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>Edit</h3>
+    <h3></h3>
   </div>
   <div class="modal-body" style="height: 780px; overflow: hidden;">
     <div class="row-fluid">
@@ -51,7 +51,7 @@
 <div id="modal-delete" class="modal hide fade" tabindex="-1">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>Delete site</h3>
+    <h3>Delete</h3>
   </div>
   <div class="modal-body">
     <form id="modal-form-delete"><input type="hidden" id="site_id" name="site_id"></form>
@@ -94,11 +94,13 @@ window.operateEvents = {
             var k = $(this).attr('id')
             $("#modal-update #"+k).val(row[k]);
         });
+        $modal_update.modal('show').find('h3').text('Edit');
         $modal_update.modal('show').find('#active_p').show();
         $modal_update.modal('show').find('#dt_created_p').show();
         $modal_update.modal('show').find('#dt_updated_p').show();
         $modal_update.modal('show').find('#modal-form-submit-create').hide();
         $modal_update.modal('show').find('#modal-form-submit-update').show();
+        $modal_update.modal('show').find('.alert').hide();
     },
 };
 
@@ -113,5 +115,6 @@ $('#inew').click(function(){
     $modal_update.modal('show').find('#dt_updated_p').hide();
     $modal_update.modal('show').find('#modal-form-submit-update').hide();
     $modal_update.modal('show').find('#modal-form-submit-create').show();
+    $modal_update.modal('show').find('.alert').hide();
 });
 </script>
