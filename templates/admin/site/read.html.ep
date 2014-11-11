@@ -21,68 +21,10 @@
         </thead>
 </table>
 
-<div id="modal-update" class="modal container hide fade" tabindex="-1">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3></h3>
-  </div>
-  <div class="modal-body" style="height: 780px; overflow: hidden;">
-    <div class="row-fluid">
-      <div class="span6">
-        <form id="modal-form-update">
-        <p>Site ID:    <input name="site_id" id="site_id" type="text" class="span12"></p>
-        <p id="active_p">Active:     <input name="active" id="active" type="text" class="span12"></p>
-        <p id="dt_created_p">Dt created: <input name="dt_created" id="dt_created" type="text" class="span12"></p>
-        <p id="dt_updated_p">Dt updated: <input name="dt_updated" id="dt_updated" type="text" class="span12"></p>
-        <p>Site name:  <input name="site_name" id="site_name" type="text" class="span12"></p>
-        <p>Domain:     <input name="domain" id="domain" type="text" class="span12"></p>
-        <p>Track url:  <input name="track_url" id="track_url" type="text" class="span12"></p>
-        </form>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" data-dismiss="modal" class="btn">Close</button>
-    <a id="modal-form-submit-update" class="btn btn-primary" href="#">Save changes</a>
-    <a id="modal-form-submit-create" class="btn btn-primary" href="#">Create</a>
-  </div>
-</div>
-
-<div id="modal-delete" class="modal hide fade" tabindex="-1">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>Delete</h3>
-  </div>
-  <div class="modal-body">
-    <form id="modal-form-delete"><input type="hidden" id="site_id" name="site_id"></form>
-    <p>Are your sure you want to delete data?</p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" data-dismiss="modal" class="btn">Close</button>
-    <a id="modal-form-submit-delete" class="btn btn-primary" href="#">Delete</a>
-  </div>
-</div>
+%= $c->render_to_string('admin/modal_update', fields => ['site_id', 'active', 'dt_created', 'dt_updated', 'site_name', 'domain', 'track_url'], no_insert_field => ['active', 'dt_created', 'dt_updated'], table => 'site')
+%= $c->render_to_string('admin/modal_delete', fields => ['site_id'], table => 'site')
 
 <script>
-var $modal_update = $('#modal-update');
-$modal_update.on('click', '#modal-form-submit-create', function(){
-      $.post("/admin/site/create.json", $("#modal-form-update").serialize(), function(data) {
-          modal_show_msg($modal_update, data.code);
-      });
-});
-$modal_update.on('click', '#modal-form-submit-update', function(){
-      $.post("/admin/site/update.json", $("#modal-form-update").serialize(), function(data) {
-          modal_show_msg($modal_update, data.code);
-      });
-});
-
-var $modal_delete = $('#modal-delete');
-$modal_delete.on('click', '#modal-form-submit-delete', function(){
-      $.post("/admin/site/delete.json", $("#modal-form-delete").serialize(), function(data) {
-          modal_show_msg($modal_delete, data.code);
-      });
-});
-
 window.operateEvents = {
     'click .remove': function (e, value, row, index) {
         $("#modal-delete #site_id").val(row.site_id);
@@ -95,9 +37,7 @@ window.operateEvents = {
             $("#modal-update #"+k).val(row[k]);
         });
         $modal_update.modal('show').find('h3').text('Edit');
-        $modal_update.modal('show').find('#active_p').show();
-        $modal_update.modal('show').find('#dt_created_p').show();
-        $modal_update.modal('show').find('#dt_updated_p').show();
+        $modal_update.modal('show').find('.create_hidden').show();
         $modal_update.modal('show').find('#modal-form-submit-create').hide();
         $modal_update.modal('show').find('#modal-form-submit-update').show();
         $modal_update.modal('show').find('.alert').hide();
@@ -110,9 +50,7 @@ $('#inew').click(function(){
         var k = $(this).attr('id')
         $("#modal-update #"+k).val('');
     });
-    $modal_update.modal('show').find('#active_p').hide();
-    $modal_update.modal('show').find('#dt_created_p').hide();
-    $modal_update.modal('show').find('#dt_updated_p').hide();
+    $modal_update.modal('show').find('.create_hidden').hide();
     $modal_update.modal('show').find('#modal-form-submit-update').hide();
     $modal_update.modal('show').find('#modal-form-submit-create').show();
     $modal_update.modal('show').find('.alert').hide();

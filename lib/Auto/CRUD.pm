@@ -10,7 +10,7 @@ sub startup {
   # Documentation browser under "/perldoc"
   $self->plugin('PODRenderer');
   $self->plugin('Config');
-
+  $self->plugin('DefaultHelpers');
 
   $self->app->log(Mojo::Log->new);
 

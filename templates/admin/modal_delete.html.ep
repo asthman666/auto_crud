@@ -1,0 +1,27 @@
+<div id="modal-delete" class="modal hide fade" tabindex="-1">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>Delete</h3>
+  </div>
+  <div class="modal-body">
+    <form id="modal-form-delete">
+      % for ( @$fields ) {
+          <input type="hidden" id="<%= $_ %>" name="<%= $_ %>">
+      % }
+    </form>
+    <p>Are your sure you want to delete the data?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn">Close</button>
+    <a id="modal-form-submit-delete" class="btn btn-primary" href="#">Delete</a>
+  </div>
+</div>
+
+<script>
+var $modal_delete = $('#modal-delete');
+$modal_delete.on('click', '#modal-form-submit-delete', function(){
+      $.post("/admin/<%= $table %>/delete.json", $("#modal-form-delete").serialize(), function(data) {
+          modal_show_msg($modal_delete, data.code);
+      });
+});
+</script>

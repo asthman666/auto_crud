@@ -1,0 +1,38 @@
+<div id="modal-update" class="modal container hide fade" tabindex="-1">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3></h3>
+  </div>
+  <div class="modal-body" style="height: 780px; overflow: hidden;">
+    <div class="row-fluid">
+      <div class="span6">
+        <form id="modal-form-update">
+	% for my $name (@$fields) {
+	% my $label = join(" ", map {lc $_ eq 'id' ? 'ID' : $_} split(/_/, ucfirst($name)));
+	<p<% if (grep {$name eq $_} @$no_insert_field) { %> class="create_hidden"<% } %>> 
+	   <%= $label %><input name="<%= $name %>" id="<%= $name %>" type="text" class="span12"></p>
+	% }
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn">Close</button>
+    <a id="modal-form-submit-update" class="btn btn-primary" href="#">Save changes</a>
+    <a id="modal-form-submit-create" class="btn btn-primary" href="#">Create</a>
+  </div>
+</div>
+
+<script>
+var $modal_update = $('#modal-update');
+$modal_update.on('click', '#modal-form-submit-create', function(){
+      $.post("/admin/<%= $table %>/create.json", $("#modal-form-update").serialize(), function(data) {
+          modal_show_msg($modal_update, data.code);
+      });
+});
+$modal_update.on('click', '#modal-form-submit-update', function(){
+      $.post("/admin/<%= $table %>/update.json", $("#modal-form-update").serialize(), function(data) {
+          modal_show_msg($modal_update, data.code);
+      });
+});
+</script>
