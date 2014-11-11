@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/bootstrap-responsive.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="/css/bootstrap-table.css">
+    <link rel="stylesheet" href="/css/bootstrap-modal.css">
+    <link rel="stylesheet" href="/css/bootstrap-modal-bs3patch.css">
+
     <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
     <script src="/js/bootstrap-table.js"></script>
+    <script src="/js/bootstrap-modal.js"></script>
+    <script src="/js/bootstrap-modalmanager.js"></script>
+    <script src="/js/i.js"></script>
     <title><%= title %></title>
   </head>
   <body><%= content %></body>
 </html>
+

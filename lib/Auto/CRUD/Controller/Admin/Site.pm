@@ -31,4 +31,58 @@ sub api_read {
     $self->render(json => $info);
 }
 
+sub api_create {
+    my $self = shift;
+    my $site_id = $self->param("site_id");
+
+    my $info;
+
+    my @k = ("site_name", "domain", "track_url");
+    push @k, "site_id" if $site_id;
+    
+    my @v;
+    foreach ( @k ) {
+        push @v, $self->param($_);
+    }
+    
+    push @k, ("dt_created", "dt_updated");
+    push @v, ("now()", "now()");
+    
+    my $query = "insert into site (" . join(",", @k) . ") values (" . join(",", ("?")x@v ) . ")";
+    $self->mysql->db->query($query, @v);
+
+    $info->{code} = 1;
+}
+
+sub api_update {
+    my $self = shift;
+    my $site_id     = $self->param("site_id");
+    my $info;
+    $info->{code} = 0;
+
+    if ( $site_id ) {
+        my $domain = $self->param("domain");
+        my $query = "update site set domain = ?, dt_updated = now() where site_id = ?";
+        $self->mysql->db->query($query, $domain, $site_id);
+        $info->{code} = 1;
+    }
+
+    $self->render(json => $info);
+}
+
+sub api_delete {
+    my $self = shift;
+    my $site_id = $self->param("site_id");
+    my $info;
+    $info->{code} = 0;
+
+    if ( $site_id ) {
+        my $query = "delete from site where site_id = ?";
+        $self->mysql->db->query($query, $site_id);
+        $info->{code} = 1;
+    }
+
+    $self->render(json => $info);
+}
+
 1;
