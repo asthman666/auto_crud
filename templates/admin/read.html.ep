@@ -1,0 +1,23 @@
+% layout 'default';
+
+<div id="custom-toolbar">
+    <div class="form-inline" role="form">
+         <button id="inew" class="btn btn-default">New</button>
+    </div>
+</div>
+
+<table id="events-table" data-url="<%= $c->req->url->path %>/read.json" data-toggle="table" data-sort-name="<%= $default_sort_field %>" data-sort-order="<%= $default_sort_order %>" data-side-pagination="server" data-pagination="true" data-page-list="[10, 50, 100]" data-search="true" data-toolbar="#custom-toolbar">
+        <thead>
+            <tr>
+                % for (@$db_fields ) {
+                % my $label = join(" ", map {lc $_ eq 'id' ? 'ID' : $_} split(/_/, ucfirst($_)));
+                <th data-field="<%= $_ %>" data-sortable="true"><%= $label %></th>
+                % }
+		<th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Operate</th>
+            </tr>
+        </thead>
+</table>
+
+%= $c->render_to_string('admin/modal_update', db_fields => $db_fields, no_insert_db_fields => $no_insert_db_fields, table => $table)
+%= $c->render_to_string('admin/modal_delete', delete_key_db_fields => $delete_key_db_fields, table => $table)
+%= $c->render_to_string('admin/footer_js', delete_key_db_fields => $delete_key_db_fields)

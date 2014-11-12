@@ -22,14 +22,17 @@ sub startup {
   my $r = $self->routes;
 
   # Normal route to controller
-  $r->get('/')->to('example#welcome');
-  $r->get('/admin/site')->to('admin-site#read');
-  $r->post('/admin/site/create.json')->to('admin-site#api_create');
-  $r->get('/admin/site/read.json')->to('admin-site#api_read');
-  $r->post('/admin/site/update.json')->to('admin-site#api_update');
-  $r->post('/admin/site/delete.json')->to('admin-site#api_delete');
-  $r->get('/admin/review')->to('admin-review#read');
-  $r->get('/admin/review/read.json')->to('admin-review#api_read');
+  #$r->get('/')->to('example#welcome');
+  $r->get('/admin/:table/read.json')->to('admin#api_read');
+  $r->post('/admin/:table/create.json')->to('admin#api_create');
+  $r->post('/admin/:table/update.json')->to('admin#api_update');
+  $r->post('/admin/:table/delete.json')->to('admin#api_delete');
+  $r->get('/admin/:table')->to('admin#read');
+  #$r->get('/admin/site')->to('admin-site#read');
+  #$r->post('/admin/site/create.json')->to('admin-site#api_create');
+  #$r->get('/admin/site/read.json')->to('admin-site#api_read');
+  #$r->post('/admin/site/update.json')->to('admin-site#api_update');
+  #$r->post('/admin/site/delete.json')->to('admin-site#api_delete');
 }
 
 1;
