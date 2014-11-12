@@ -7,9 +7,9 @@
     <div class="row-fluid">
       <div class="span6">
         <form id="modal-form-update">
-	% for my $name (@$fields) {
+	% for my $name (@$db_fields) {
 	% my $label = join(" ", map {lc $_ eq 'id' ? 'ID' : $_} split(/_/, ucfirst($name)));
-	<p<% if (grep {$name eq $_} @$no_insert_field) { %> class="create_hidden"<% } %>> 
+	<p<% if (grep {$name eq $_} @$no_insert_db_fields) { %> class="create_hidden"<% } %>> 
 	   <%= $label %><input name="<%= $name %>" id="<%= $name %>" type="text" class="span12"></p>
 	% }
         </form>

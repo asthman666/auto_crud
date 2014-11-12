@@ -6,53 +6,18 @@
     </div>
 </div>
 
-<table id="events-table" data-url="/admin/site/read.json" data-toggle="table" data-sort-name="site_id" data-sort-order="desc" data-side-pagination="server" data-pagination="true" data-page-list="[10, 50, 100]" data-search="true" data-toolbar="#custom-toolbar">
+<table id="events-table" data-url="<%= $c->req->url->path %>/read.json" data-toggle="table" data-sort-name="<%= $data_default_sort_field %>" data-sort-order="<%= $data_default_sort_order %>" data-side-pagination="server" data-pagination="true" data-page-list="[10, 50, 100]" data-search="true" data-toolbar="#custom-toolbar">
         <thead>
             <tr>
-                <th data-field="site_id" data-sortable="true">Site ID</th>
-                <th data-field="active" data-sortable="true">Active</th>
-                <th data-field="dt_created" data-sortable="true">Dt created</th>
-                <th data-field="dt_updated" data-sortable="true">Dt updated</th>
-                <th data-field="site_name" data-sortable="true">Site name</th>
-                <th data-field="domain" data-sortable="true">Domain</th>
-                <th data-field="track_url" data-sortable="true">Track url</th>
+                % for (@$db_fields ) {
+                % my $label = join(" ", map {lc $_ eq 'id' ? 'ID' : $_} split(/_/, ucfirst($_)));
+                <th data-field="<%= $_ %>" data-sortable="true"><%= $label %></th>
+                % }
 		<th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Operate</th>
             </tr>
         </thead>
 </table>
 
-%= $c->render_to_string('admin/modal_update', fields => ['site_id', 'active', 'dt_created', 'dt_updated', 'site_name', 'domain', 'track_url'], no_insert_field => ['active', 'dt_created', 'dt_updated'], table => 'site')
-%= $c->render_to_string('admin/modal_delete', fields => ['site_id'], table => 'site')
-
-<script>
-window.operateEvents = {
-    'click .remove': function (e, value, row, index) {
-        $("#modal-delete #site_id").val(row.site_id);
-        $modal_delete.modal('show');
-    },
-    'click .update': function (e, value, row, index) {
-        //Object.keys(row).forEach(function(k){$("#modal-update #"+k).val(row[k]);});
-        $('#modal-form-update input').each(function(){
-            var k = $(this).attr('id')
-            $("#modal-update #"+k).val(row[k]);
-        });
-        $modal_update.modal('show').find('h3').text('Edit');
-        $modal_update.modal('show').find('.create_hidden').show();
-        $modal_update.modal('show').find('#modal-form-submit-create').hide();
-        $modal_update.modal('show').find('#modal-form-submit-update').show();
-        $modal_update.modal('show').find('.alert').hide();
-    },
-};
-
-$('#inew').click(function(){
-    $modal_update.modal('show').find('h3').text('Create');
-    $('#modal-form-update input').each(function(){
-        var k = $(this).attr('id')
-        $("#modal-update #"+k).val('');
-    });
-    $modal_update.modal('show').find('.create_hidden').hide();
-    $modal_update.modal('show').find('#modal-form-submit-update').hide();
-    $modal_update.modal('show').find('#modal-form-submit-create').show();
-    $modal_update.modal('show').find('.alert').hide();
-});
-</script>
+%= $c->render_to_string('admin/modal_update', db_fields => $db_fields, no_insert_db_fields => $no_insert_db_fields, table => $table)
+%= $c->render_to_string('admin/modal_delete', delete_key_db_fields => $delete_key_db_fields, table => $table)
+%= $c->render_to_string('admin/footer_js', delete_key_db_fields => $delete_key_db_fields)

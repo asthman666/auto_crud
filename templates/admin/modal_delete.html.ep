@@ -5,7 +5,7 @@
   </div>
   <div class="modal-body">
     <form id="modal-form-delete">
-      % for ( @$fields ) {
+      % for ( @$delete_key_db_fields ) {
           <input type="hidden" id="<%= $_ %>" name="<%= $_ %>">
       % }
     </form>

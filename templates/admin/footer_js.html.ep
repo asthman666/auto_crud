@@ -1,0 +1,34 @@
+<script>
+window.operateEvents = {
+    'click .remove': function (e, value, row, index) {
+        % for ( @$delete_key_db_fields ) {
+        $("#modal-delete #<%= $_ %>").val(row.<%= $_ %>);
+        % }
+        $modal_delete.modal('show');
+    },
+    'click .update': function (e, value, row, index) {
+        //Object.keys(row).forEach(function(k){$("#modal-update #"+k).val(row[k]);});
+        $('#modal-form-update input').each(function(){
+            var k = $(this).attr('id')
+            $("#modal-update #"+k).val(row[k]);
+        });
+        $modal_update.modal('show').find('h3').text('Edit');
+        $modal_update.modal('show').find('.create_hidden').show();
+        $modal_update.modal('show').find('#modal-form-submit-create').hide();
+        $modal_update.modal('show').find('#modal-form-submit-update').show();
+        $modal_update.modal('show').find('.alert').hide();
+    },
+};
+
+$('#inew').click(function(){
+    $modal_update.modal('show').find('h3').text('Create');
+    $('#modal-form-update input').each(function(){
+        var k = $(this).attr('id')
+        $("#modal-update #"+k).val('');
+    });
+    $modal_update.modal('show').find('.create_hidden').hide();
+    $modal_update.modal('show').find('#modal-form-submit-update').hide();
+    $modal_update.modal('show').find('#modal-form-submit-create').show();
+    $modal_update.modal('show').find('.alert').hide();
+});
+</script>

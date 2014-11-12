@@ -3,7 +3,15 @@ use Mojo::Base 'Mojolicious::Controller';
 
 sub read {
   my $self = shift;
-  $self->render(title => 'Site');
+  
+  $self->render(
+      table                   => 'site', 
+      db_fields               => ['site_id', 'active', 'dt_created', 'dt_updated', 'site_name', 'domain', 'track_url'],
+      no_insert_db_fields     => ['active', 'dt_created', 'dt_updated'],
+      delete_key_db_fields    => ['site_id'],
+      data_default_sort_field => 'site_id',
+      data_default_sort_order => 'desc',
+      );
 }
 
 sub api_read {
